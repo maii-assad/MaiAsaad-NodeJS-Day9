@@ -126,7 +126,7 @@ app.delete("/profile", (req, res)  => {
     }
 
     // make sure that this is the admin
-    if (!loggedInUser() || !loggedInUser().role == 'ADMIN') {
+    if (!loggedInUser() || loggedInUser().role == 'ADMIN') {
         return res.status(400).json({
             error : "You are not admin"
         })
@@ -134,14 +134,12 @@ app.delete("/profile", (req, res)  => {
 
     // make sure that user is exist
     const user = users.findIndex(user => user.username === username)
-    if (!user) {
-        return res.status(404).json({ 
-            error: 'User not found'
-         })
-    }
+    if (user === -1) {
+    return res.status(404).json({ error: 'User not found' })
+}
 
     const updateUsers = users.filter(u => u.username !== username);
-    users.push(...updateUsers);
+    users = updateUsers;
     res.json({
         message : "User deleted!"
     })
