@@ -12,11 +12,10 @@ function loadUsers(users, dbFile) {
     //نفس فكرة loadTasks لكن مع users.json 
     try {
         const data = fs.readFileSync(dbFile, 'utf-8')
-        const jsonData = JSON.parse(data)
-        users.push(...jsonData)
+        return JSON.parse(data)
     }
-    catch (error) {
-        console.error("Error loading users : ", error)
+    catch {
+        return []
     }
 }
 
